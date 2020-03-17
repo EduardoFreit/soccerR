@@ -41,9 +41,9 @@ crawlerTeam <- function(link){
 
   if (stringr::str_sub(link, -2 ,-1) == "=1"){
     cat("...")
-    teamDst <- teamDst(link)
-    teamsNM <- c(teamsNM, teamDst[1])
-    teamsID <- c(teamsID, (teamDst[2] %>% as.numeric()))
+    teamDstDATA <- teamDst(link)
+    teamsNM <- c(teamsNM, teamDstDATA[1])
+    teamsID <- c(teamsID, (teamDstDATA[2] %>% as.numeric()))
   }
   
   data.frame(NomeTime = teamsNM, ID = teamsID)
@@ -62,7 +62,7 @@ tabelaTeams <- function(link){
       sum((100/length(linksTeams))) %>% 
       round(2)
     
-    cat("Loading...", x,'%\n')
+    cat("Loading...\n", x,'%\n')
     tbTeams <- tbTeams %>%
       rbind(crawlerTeam(i))
       Sys.sleep(runif(1, 3.3, 7.8))
