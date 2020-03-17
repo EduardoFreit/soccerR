@@ -4,23 +4,23 @@ library(dplyr)
 aux <- "https://www.ogol.com.br/search_team.php?search_string=&sta=&nac=6&posi=&peq=&ida=&cap=&ord=i&op=all&page=1"
 vs <- "https://www.ogol.com.br/team_adversario.php?id=2244&fk_adv=2240"
 
-teamsDestq <- function(link){
+teamDst <- function(link){
   Sys.sleep(runif(1, 5.3, 7.8))
-  teamsHTML1 <- link %>% 
+  teamDestHTML <- link %>% 
     read_html() %>% 
     html_nodes('.zztable') %>% 
     .[1] %>% html_nodes("div a")
   
-  teamsNM1 <- teamsHTML1 %>%
+  teamDestNM <- teamDestHTML %>%
     html_text() %>% 
     toupper()
   
-  teamsID1 <- teamsHTML1 %>% 
+  teamDestID <- teamDestHTML %>% 
     html_attr("href") %>% 
-    .[nchar(teamsID1) <= 23] %>% 
+    .[nchar(teamDestID) <= 23] %>% 
     gsub(".*=", "", .) %>% as.numeric()
   
-  teamDestq <- c(teamsNM1,teamsID1)
+  teamDestq <- c(teamDestNM,teamDestID)
 }
 
 crawlerTeam <- function(link){
@@ -38,12 +38,12 @@ crawlerTeam <- function(link){
   teamsID <- teamsID[nchar(teamsID) <= 23]
   teamsID <- gsub(".*=", "", teamsID) %>% 
     as.numeric()
-  
+
   if (stringr::str_sub(link, -2 ,-1) == "=1"){
     cat("...")
-    teamDest_aux <- teamDestq
-    teamsNM <- c(teamsNM, teamDest_aux[1])
-    teamsID <- c(teamsID, (teamDest_aux[2] %>% as.numeric()))
+    teamDst <- teamDst(link)
+    teamsNM <- c(teamsNM, teamDst[1])
+    teamsID <- c(teamsID, (teamDst[2] %>% as.numeric()))
   }
   
   data.frame(NomeTime = teamsNM, ID = teamsID)
@@ -70,4 +70,3 @@ tabelaTeams <- function(link){
   saveRDS(tbTeams, "data/tables/TabelaDeTimesBR.rds")
   cat("Done 100",'%\n')
 }
-
