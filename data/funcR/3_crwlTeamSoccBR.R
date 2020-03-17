@@ -38,7 +38,7 @@ crawlerTeam <- function(link){
   teamsID <- teamsID[nchar(teamsID) <= 23]
   teamsID <- gsub(".*=", "", teamsID) %>% 
     as.numeric()
-  
+
   if (stringr::str_sub(link, -2 ,-1) == "=1"){
     cat("...")
     teamDest_aux <- teamDestq
@@ -70,4 +70,3 @@ tabelaTeams <- function(link){
   saveRDS(tbTeams, "data/tables/TabelaDeTimesBR.rds")
   cat("Done 100",'%\n')
 }
-
