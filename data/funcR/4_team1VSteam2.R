@@ -1,7 +1,7 @@
 library(dplyr)
 
-#time1 <- toupper("santa cruz")
-#time2 <- toupper("flamengo")
+time1 <- toupper("santa cruz")
+time2 <- toupper("flamengo")
 
 time1VStime2 <- function(time1, time2){ 
   tableTime <- readRDS("data/tables/TabelaDeTimesBR.rds")
@@ -15,7 +15,7 @@ time1VStime2 <- function(time1, time2){
   idTime2 <- tableTime %>% 
     select(NomeTime, ID) %>% 
     filter(NomeTime == toupper(time2)) %>% 
-    select(ID) %>% 
+    select(ID) %>% s
     as.numeric()
   
   paste("https://www.ogol.com.br/team_adversario.php?id=",

@@ -1,6 +1,3 @@
-library(rvest)
-library(xml2)
-
 tbLinkBrTeam <- function(link){
   source("data/funcR/1_numbPageBrTeam.R")
   for(i in 1:numberTeamPages(link)){

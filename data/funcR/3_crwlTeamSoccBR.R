@@ -1,6 +1,3 @@
-library(rvest)
-library(xml2)
-library(dplyr)
 aux <- "https://www.ogol.com.br/search_team.php?search_string=&sta=&nac=6&posi=&peq=&ida=&cap=&ord=i&op=all&page=1"
 vs <- "https://www.ogol.com.br/team_adversario.php?id=2244&fk_adv=2240"
 
@@ -16,11 +13,11 @@ teamDst <- function(link){
     toupper()
   
   teamDestID <- teamDestHTML %>% 
-    html_attr("href") %>% 
-    .[nchar(teamDestID) <= 23] %>% 
+    html_attr("href")
+  teamDestID1 <- teamDestID[nchar(teamDestID) <= 23] %>% 
     gsub(".*=", "", .) %>% as.numeric()
   
-  teamDestq <- c(teamDestNM,teamDestID)
+  teamDestq <- c(teamDestNM,teamDestID1)
 }
 
 crawlerTeam <- function(link){
@@ -50,6 +47,9 @@ crawlerTeam <- function(link){
 }
 
 tabelaTeams <- function(link){
+  library(rvest)
+  library(xml2)
+  library(dplyr)
   source("data/funcR/2_tbLinkBrTeam.R")
   x <- 0
   tbLinkBrTeam(link)
